@@ -1,0 +1,1 @@
+json.partial! "fedora_resources/fedora_resource", fedora_resource: @fedora_resource

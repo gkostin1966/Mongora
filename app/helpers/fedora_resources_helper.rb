@@ -1,0 +1,2 @@
+module FedoraResourcesHelper
+end

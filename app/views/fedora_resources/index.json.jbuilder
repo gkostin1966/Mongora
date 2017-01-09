@@ -1,0 +1,1 @@
+json.array! @fedora_resources, partial: 'fedora_resources/fedora_resource', as: :fedora_resource

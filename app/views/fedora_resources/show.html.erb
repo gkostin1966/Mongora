@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @fedora_resource.name %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @fedora_resource.identifier %>
+</p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @fedora_resource.path %>
+</p>
+
+<%= link_to 'Edit', edit_fedora_resource_path(@fedora_resource) %> |
+<%= link_to 'Back', fedora_resources_path %>

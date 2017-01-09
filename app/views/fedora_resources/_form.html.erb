@@ -1,0 +1,32 @@
+<%= form_for(fedora_resource) do |f| %>
+  <% if fedora_resource.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(fedora_resource.errors.count, "error") %> prohibited this fedora_resource from being saved:</h2>
+
+      <ul>
+      <% fedora_resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :identifier %>
+    <%= f.text_field :identifier %>
+  </div>
+
+  <div class="field">
+    <%= f.label :path %>
+    <%= f.text_field :path %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

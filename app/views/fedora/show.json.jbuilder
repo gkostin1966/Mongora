@@ -1,0 +1,1 @@
+json.partial! "fedora/fedora", fedora: @fedora

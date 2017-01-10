@@ -26,5 +26,8 @@ module Mongora
       # Make Mongoid the default Object Relational Mapping (ORM)
       g.orm :mongoid
     end
+
+    config.eager_load_paths += %W( #{config.root}/app/services )
+
   end
 end

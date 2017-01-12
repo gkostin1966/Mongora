@@ -5,13 +5,19 @@ class FedoraController < ApplicationController
 
   # GET /fedora
   # GET /fedora.json
+  def index
+    @fedora = Fedora.rest('rest/')
+  end
+
+  # GET /fedora/1
+  # GET /fedora/1.json
   def show
   end
 
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_fedora
-    @fedora = Fedora.rest
+    @fedora = Fedora.rest(params[:id].gsub('|','/'))
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,0 +1,41 @@
+<table>
+  <tr>
+    <td>parent</td>
+    <% parent = @fedora["hasParent"] %>
+    <% unless parent.nil? %>
+      <td><%= link_to parent, fedora_path(parent.gsub('/','|')) %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <td>id</td>
+    <% id = @fedora["id"] %>
+    <td><%= link_to id, fedora_path(id.gsub('/','|')) %></td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td><%= @fedora["type"] %></td>
+  </tr>
+  <% model = @fedora["fedora-model:hasModel"] %>
+  <% unless model.nil? %>
+    <tr>
+      <td>model</td>
+      <td><%= model %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>children</td>
+    <td><%= @fedora["numberOfChildren"] %></td>
+  </tr>
+  <% contains = [] %>
+  <% contains.push *(@fedora["contains"]) %>
+  <% contains.each_with_index do |v, i| %>
+    <tr>
+      <td><%= i %></td>
+      <% unless parent.nil? %>
+        <% f = Fedora.rest(v) %>
+        <td><%= f["fedora-model:hasModel"] %></td>
+      <% end %>
+      <td><%= link_to v, fedora_path(v.gsub('/','|')) %></td>
+    </tr>
+  <% end %>
+</table>

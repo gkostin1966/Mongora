@@ -1,29 +1,27 @@
 <p id="notice"><%= notice %></p>
 
+<%= render partial: "fedora" %>
+
+<table>
+  <% @fedora.each do |key, value| %>
+      <tr>
+            <td><%= key %></td>
+            <% if value.is_a?(Array) %>
+              <% value.each do |e| %>
+                <td><%= e %></td>
+                    <% end %>
+            <% elsif value.is_a?(Hash) %>
+              <% value.each do |k, v| %>
+                <td><%= k %> => <%= v %></td>
+              <% end %>
+            <% else %>
+                <td><%= value %></td>
+          <% end %>
+      </tr>
+  <% end %>
+</table>
+
+
 <p>
-  <strong>#inspect</strong>
   <%= @fedora.inspect %>
 </p>
-
-<p>
-  <strong>#body</strong>
-  <%= @fedora.body %>
-</p>
-<p>
-  <strong>#headers</strong>
-  <%= @fedora.headers %>
-</p>
-<p>
-  <strong>#request</strong>
-  <%= @fedora.request %>
-</p>
-<p>
-  <strong>#response</strong>
-  <%= @fedora.response %>
-</p>
-
-<p>
-  <strong>#parsed_response</strong>
-  <%= @fedora.parsed_response %>
-</p>
-

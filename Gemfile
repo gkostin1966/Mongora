@@ -57,3 +57,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty'
+
+# Ruby JSON-LD reader/writer for RDF.rb
+gem 'json-ld'

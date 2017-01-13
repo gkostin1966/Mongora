@@ -15,7 +15,7 @@
     <td>type</td>
     <td><%= @fedora["type"] %></td>
   </tr>
-  <% model = @fedora["fedora-model:hasModel"] %>
+  <% model = @fedora["hasModel"] %>
   <% unless model.nil? %>
     <tr>
       <td>model</td>
@@ -33,7 +33,7 @@
       <td><%= i %></td>
       <% unless parent.nil? %>
         <% f = Fedora.rest(v) %>
-        <td><%= f["fedora-model:hasModel"] %></td>
+        <td><%= f["hasModel"] %></td>
       <% end %>
       <td><%= link_to v, fedora_path(v.gsub('/','|')) %></td>
     </tr>

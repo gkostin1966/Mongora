@@ -1,41 +1,50 @@
 <table>
-  <tr>
-    <td>parent</td>
-    <% parent = @fedora["hasParent"] %>
-    <% unless parent.nil? %>
-      <td><%= link_to parent, fedora_path(parent.gsub('/','|')) %></td>
-    <% end %>
-  </tr>
-  <tr>
-    <td>id</td>
-    <% id = @fedora["id"] %>
-    <td><%= link_to id, fedora_path(id.gsub('/','|')) %></td>
-  </tr>
-  <tr>
-    <td>type</td>
-    <td><%= @fedora["type"] %></td>
-  </tr>
-  <% model = @fedora["hasModel"] %>
-  <% unless model.nil? %>
-    <tr>
-      <td>model</td>
-      <td><%= model %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td>children</td>
-    <td><%= @fedora["numberOfChildren"] %></td>
-  </tr>
+  <%= table_row_resource_link("id") %>
+  <%= table_row_property("type") %>
+  <%= table_row_resource_link("hasParent") %>
+  <%= table_row_property("hasModel") %>
+  <%= table_row_resource_link("hasMember") %>
+  <%= table_row_resource_link("hasPart") %>
+  <%= table_row_resource_link("proxyIn") %>
+  <%= table_row_resource_link("proxyFor") %>
+  <%= table_row_resource_link("first") %>
+  <%= table_row_resource_link("prev") %>
+  <%= table_row_resource_link("next") %>
+  <%= table_row_resource_link("last") %>
+  <%= table_row_resource_link("hasRelatedImage") %>
+  <%= table_row_resource_link("hasRelatedMediaFragment") %>
+  <%= table_row_resource_link("accessControl") %>
+  <%= table_row_property("hasFile") %>
+  <%= table_row_property("numberOfChildren") %>
   <% contains = [] %>
   <% contains.push *(@fedora["contains"]) %>
   <% contains.each_with_index do |v, i| %>
     <tr>
       <td><%= i %></td>
-      <% unless parent.nil? %>
-        <% f = Fedora.rest(v) %>
-        <td><%= f["hasModel"] %></td>
+          <% model = @fedora["hasModel"] %>
+          <% if model == "ActiveFedora::DirectContainer" %>
+
+
+              <td>binary</td>
+              <td><%= v %></td>
+              <% else %>
+          <% unless @fedora["hasParent"].nil? %>
+              <% f = Fedora.rest(v) %>
+              <% m = f["hasModel"] %>
+              <td>
+              <% case m %>
+                  <% when "hello" %>
+                    hello
+                    <% else %>
+                    <%= m %>
+              <% end %>
+                </td>
+
+
+              <% end %>
+          <td><%= link_to v, fedora_path(v.gsub('/','|')) %></td>
       <% end %>
-      <td><%= link_to v, fedora_path(v.gsub('/','|')) %></td>
+
     </tr>
   <% end %>
 </table>

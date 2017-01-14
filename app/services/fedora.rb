@@ -101,6 +101,8 @@ class Fedora
 
         "relation" :"http://www.iana.org/assignments/relation/",
         "first" : { "@id" : "relation:first", "@type" : "@id" },
+        "prev" : { "@id" : "relation:prev", "@type" : "@id" },
+        "next" : { "@id" : "relation:next", "@type" : "@id" },
         "last" : { "@id" : "relation:last", "@type" : "@id" },
 
         "acl" : "http://www.w3.org/ns/auth/acl#",
@@ -114,9 +116,11 @@ class Fedora
         "pcdm" : "http://pcdm.org/models#",
         "hasMember" : { "@id" : "pcdm:hasMember", "@container" : "@set", "@type" : "@id" },
         "hasFile" : { "@id" : "pcdm:hasFile", "@type" : "@id" },
+
         "ore" : "http://www.openarchives.org/ore/",
         "oret" : "ore:terms/",
         "proxyFor" : { "@id" : "oret:proxyFor", "@type" : "@id" },
+        "proxyIn" : { "@id" : "oret:proxyIn", "@type" : "@id" },
 
         "gkostin" : "http://gkostin.com#"
       }

@@ -5,7 +5,8 @@ module FedoraHelper
       if value.is_a?(Array)
         td_array = []
         td_array.push "<td>#{property}</td>"
-        td_array.push *value.collect { |v| content_tag(:td, v) }
+        # td_array.push *value.collect { |v| content_tag(:td, v) }
+        td_array.push "<td>#{value.inspect}</td>"
         content_tag(:tr) do
           td_array.join(" ").html_safe
         end
@@ -28,7 +29,7 @@ module FedoraHelper
       if value.is_a?(Array)
         td_array = []
         td_array.push "<td>#{resource}</td>"
-        td_array.push *value.collect { |v| content_tag(:td, link_to(v, fedora_path(v.gsub('/','|')))) }
+        td_array.push *value.collect { |v| content_tag(:td, link_to(v, fedora_path(v.gsub('/','|')))) + content_tag(:td) { (Fedora.rest(v))["hasModel"] }}
         content_tag(:tr) do
           td_array.join(" ").html_safe
         end
@@ -39,7 +40,10 @@ module FedoraHelper
           end +
           content_tag(:td) do
             link_to(value, fedora_path(value.gsub('/','|')))
-          end
+          end +
+            content_tag(:td) do
+              (Fedora.rest(value))["hasModel"]
+            end
         end
       end
     end

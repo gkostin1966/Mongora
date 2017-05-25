@@ -1,1 +1,1 @@
-json.partial! "fedora/fedora", fedora: @fedora
+json.partial! "fedora/rest", node: @node

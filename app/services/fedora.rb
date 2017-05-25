@@ -8,11 +8,41 @@ class Fedora
   def self.rest(relative_id)
     id = base_uri + '/' + relative_id
     response = get(id)
-    json_ld = response
-    response.parsed_response.each do |element|
-      if element["@id"] == id
-        json_ld = element
-      end
+    json_ld = {}
+    json_ld["@id"] = id
+    json_ld["@type"] = ["http://www.gkostin.com/ns/HTTParty#Response"]
+    # json_ld["http://www.gkostin.com/ns/HTTParty#Response:request"] = [{"@type"=>"http://www.w3.org/2001/XMLSchema#string", "@value"=>"#{response.request}"}]
+    # json_ld["http://www.gkostin.com/ns/HTTParty#Response:response"] = [{"@type"=>"http://www.w3.org/2001/XMLSchema#string", "@value"=>"#{response.response}"}]
+    json_ld["http://www.gkostin.com/ns/HTTParty#Response:code"] = [{"@type"=>"http://www.w3.org/2001/XMLSchema#long", "@value"=>"#{response.code}"}]
+    # json_ld["http://www.gkostin.com/ns/HTTParty#Response:headers"] = [{"@type"=>"http://www.w3.org/2001/XMLSchema#string", "@value"=>"#{response.headers}"}]
+    json_ld["http://www.gkostin.com/ns/HTTParty#Response:body"] = [{"@type"=>"http://www.w3.org/2001/XMLSchema#string", "@value"=>"#{response.body}"}]
+    case response.code
+      when 400
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#BadRequest"]
+      when 404
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#NotFound"]
+      when 405
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#MethodNotAllowed"]
+      when 406
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#NotAcceptable"]
+      when 409
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#Conflict"]
+      when 410
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#Gone"]
+      when 412
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#PreconditionFailed"]
+      when 415
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError", "http://www.w3.org/ns/ldp#UnsupportedMediaType"]
+      when 500
+        json_ld["@type"] = ["http://www.w3.org/ns/ldp#RequestError"]
+      when 200
+        response.parsed_response.each do |element|
+          if element["@id"] == id
+            json_ld = element
+          end
+        end
+      else
+        # default
     end
 
     context = JSON.parse(%({
@@ -21,6 +51,9 @@ class Fedora
         "type" : "@type",
 
         "ldp" : "http://www.w3.org/ns/ldp#",
+        "RequestError" : "ldp:RequestError",
+        "Gone" : "ldp:Gone",
+        "NotFound" : "ldp:NotFound",
         "Container" : "ldp:Container",
         "BasicContainer" : "ldp:BasicContainer",
         "DirectContainer" : "ldp:DirectContainer",
@@ -122,7 +155,14 @@ class Fedora
         "proxyFor" : { "@id" : "oret:proxyFor", "@type" : "@id" },
         "proxyIn" : { "@id" : "oret:proxyIn", "@type" : "@id" },
 
-        "gkostin" : "http://gkostin.com#"
+        "gk" : "http://www.gkostin.com/ns#",
+        "gkp" : "http://www.gkostin.com/ns/HTTParty#",
+        "Response" : { "@id" : "gkp:Response" },
+        "Response#request" : { "@id" : "gkp:Response:request", "@type" : "XMLSchema:string" },
+        "Response#response" : { "@id" : "gkp:Response:response", "@type" : "XMLSchema:string" },
+        "Response#code" : { "@id" : "gkp:Response:code", "@type" : "XMLSchema:long" },
+        "Response#headers" : { "@id" : "gkp:Response:headers", "@type" : "XMLSchema:string" },
+        "Response#body" : { "@id" : "gkp:Response:body", "@type" : "XMLSchema:string" }
       }
     }))['@context']
 

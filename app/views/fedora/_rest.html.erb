@@ -1,0 +1,17 @@
+<!--<div class="container">-->
+  <!--<div class="row">-->
+
+
+<!--<div class="col-xs-12 col-xs-offset-5">-->
+  <h1>Fedora</h1>
+  <h2>Namespace</h2>
+  <ol>
+    <% contains = [] %>
+    <% contains.push *(@node["contains"]) %>
+    <% contains.each do |v| %>
+      <li><%= link_to v, fedora_node_path(v) %></li>
+    <% end %>
+  </ol>
+<!--</div>-->
+  <!--</div>-->
+<!--</div>-->

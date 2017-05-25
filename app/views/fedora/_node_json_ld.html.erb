@@ -1,0 +1,23 @@
+<table class="table table-striped">
+  <tr><th align="left">JSON-LD<th/></tr>
+  <% @node.each do |key, value| %>
+      <% if key != "@context" %>
+          <tr>
+            <td><%= key %></td>
+            <% if value.is_a?(Array) %>
+                <% value.each do |e| %>
+                    <!--<td><#%= e %></td>-->
+                <% end %>
+                <td><%= value %></td>
+            <% elsif value.is_a?(Hash) %>
+                <% value.each do |k, v| %>
+                    <!--<td><#%= k %> => <%= v %></td>-->
+                <% end %>
+                <td><%= value %></td>
+            <% else %>
+                <td><%= value %></td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+</table>

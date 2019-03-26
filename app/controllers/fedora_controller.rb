@@ -6,7 +6,7 @@ class FedoraController < ApplicationController
   # GET /fedora
   # GET /fedora.json
   def index
-    @node = Fedora.rest('rest/')
+    @node = Fedora.rest('fedora/rest/')
   end
 
   # GET /fedora/1

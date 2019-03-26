@@ -7,7 +7,7 @@ class Fedora
 
   def self.rest(relative_id)
     id = base_uri + '/' + relative_id
-    response = get(id)
+    response = get(id, timeout: 600)
     json_ld = {}
     json_ld["@id"] = id
     json_ld["@type"] = ["http://www.gkostin.com/ns/HTTParty#Response"]
